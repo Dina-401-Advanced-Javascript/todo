@@ -1,37 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import TodoForm from './form.js';
 import TodoList from './list.js';
 
 import './todo.scss';
 
-class ToDo extends React.Component {
+function ToDo(props){
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      list: [],
-    };
-  }
+  const [list, setList] = useState([]);
 
-  addItem = (item) => {
+  const addItem = (item) => {
     item._id = Math.random();
     item.complete = false;
-    this.setState({ list: [...this.state.list, item]});
+    setList([...list, item]);
   };
 
-  toggleComplete = id => {
+  const toggleComplete = id => {
 
-    let item = this.state.list.filter(i => i._id === id)[0] || {};
-
+    let item = list.filter(listItem => listItem._id === id)[0] || {};
     if (item._id) {
       item.complete = !item.complete;
-      let list = this.state.list.map(listItem => listItem._id === item._id ? item : listItem);
-      this.setState({list});
+      let newList = list.map(listItem => listItem._id === item._id ? item : listItem);
+      setList(newList);
     }
 
   };
 
-  componentDidMount() {
+  useEffect(()=> {
     let list = [
       { _id: 1, complete: false, text: 'Clean the Kitchen', difficulty: 3, assignee: 'Person A'},
       { _id: 2, complete: false, text: 'Do the Laundry', difficulty: 2, assignee: 'Person A'},
@@ -40,34 +34,29 @@ class ToDo extends React.Component {
       { _id: 5, complete: false, text: 'Take a Nap', difficulty: 1, assignee: 'Person B'},
     ];
 
-    this.setState({list});
-  }
+    setList(list);
+  },[]);
 
-  render() {
-    return (
+  return (
       <>
         <header>
           <h2>
-          There are {this.state.list.filter(item => !item.complete).length} Items To Complete
+          There are {list.filter(listItem => !listItem.complete).length} Items To Complete
           </h2>
         </header>
 
         <section className="todo">
-
           <div>
-            <TodoForm handleSubmit={this.addItem} />
+            <TodoForm handleSubmit={addItem} />
           </div>
-
           <div>
             <TodoList
-              list={this.state.list}
-              handleComplete={this.toggleComplete}
+              list={list}
+              handleComplete={toggleComplete}
             />
           </div>
         </section>
       </>
     );
-  }
 }
-
 export default ToDo;
