@@ -2,12 +2,14 @@ import React from 'react';
 
 import ToDo from './components/todo/todo.js';
 
-export default class App extends React.Component {
-  render() {
+function App(props){
+  
     return (
       <>
         <ToDo />
       </>
     );
-  }
+  
 }
+
+export default App;
