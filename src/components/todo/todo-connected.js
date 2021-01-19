@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import TodoForm from './form.js';
+import TodoForm from './Form/form.js';
 import TodoList from './list.js';
 import './todo.scss';
 
@@ -20,7 +20,7 @@ const ToDo = () => {
     })
       .then(response => response.json())
       .then(savedItem => {
-        setList([...list, savedItem])
+        setList([...list, savedItem]);
       })
       .catch(console.error);
   };
