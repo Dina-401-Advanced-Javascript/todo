@@ -20,7 +20,7 @@ const ToDo = () => {
     })
       .then(response => response.json())
       .then(savedItem => {
-        setList([...list, savedItem])
+        setList([...list, savedItem]);
       })
       .catch(console.error);
   };
