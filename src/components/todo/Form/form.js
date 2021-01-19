@@ -14,7 +14,7 @@ function ToDoForm(props){
   };
 
   const handleSubmit = (e) => {
-    console.log(e.target);
+    // console.log(e.target);
     e.preventDefault();
     if (e.target.text.value) {
       props.handleSubmit(item);
