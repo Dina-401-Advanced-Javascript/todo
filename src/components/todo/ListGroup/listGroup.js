@@ -10,8 +10,8 @@ function listGroup(props){
           className={`complete-${item.complete.toString()}`}
           key={item._id}>
           <div className={item.complete?"complete":"incomplete"} onClick={() => props.handleComplete(item._id)}>
-            <input type="checkbox" checked={item.complete}></input>
-            &nbsp;{item.text}&nbsp; <span id="assignedTo">({item.assignee}, due: {item.dueDate.toLocaleDateString('en-us')})</span>
+            <input type="checkbox" checked={item.complete} onChange={() => props.handleComplete(item._id)}></input>
+            &nbsp;{item.text}&nbsp; <span id="assignedTo">({item.assignee}, due {item.dueDate})</span>
           </div>
       </ListGroup.Item>
       ))}
