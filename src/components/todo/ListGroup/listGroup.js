@@ -14,7 +14,7 @@ function listGroup(props){
           data-testid = "list-items" 
           action 
           variant={item.complete?"success": "warning"} 
-          className={item.complete?"complete":"incomplete"}
+          className={`complete-${item.complete.toString()}`}
           key={item._id}>
 
       <Card className={item.complete?"complete":"incomplete"} style={{ width: '25rem' }} onClick={() => props.handleComplete(item._id)}>
@@ -34,10 +34,9 @@ function listGroup(props){
           <Card.Text id="difficulty">        
             Difficulty: {item.difficulty}
           </Card.Text>
-          
+          <Button variant="primary" onClick={() => props.deleteItem(item._id)}>Delete</Button>
           
         </Card.Body>
-        <Button variant="primary" onClick={() => props.deleteItem(item._id)}>Delete</Button>
       </Card>
       </ListGroup.Item>
       ))}

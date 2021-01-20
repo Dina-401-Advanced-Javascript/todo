@@ -1,29 +1,17 @@
-import React , {useState} from 'react';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import useForm from './addItemForm';
+
 // import NavDropdown from 'react-bootstrap/NavDropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function ToDoForm(props){
-  console.log("PROPS INSIDE FORM = ", props.list);
-  
-  const [item, setItem] = useState({});
-  
-  const handleInputChange = e => {
-    e.preventDefault();
-    setItem({...item, [e.target.name]: e.target.value});
-    console.log(item);
-  };
+  const [handleInputChange, handleSubmit] = useForm(getItem);
 
-  const handleSubmit = (e) => {
-    // console.log(e.target);
-    e.preventDefault();
-    if (e.target.text.value) {
-      props.handleSubmit(item);
-      e.target.reset();
-      setItem({});
-    }
-  };
+  function getItem(item){
+    props.handleSubmit(item);
+  }
 
   return(
     <Form onSubmit={handleSubmit}>  

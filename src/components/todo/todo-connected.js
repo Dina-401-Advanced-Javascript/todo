@@ -19,7 +19,6 @@ function ToDo(props) {
     })
       .then(response => response.json())
       .then(savedItem => {
-        console.log('before changing list', savedItem);
         setList([...list, savedItem]);
       })
       .catch(console.error);
@@ -85,6 +84,7 @@ function ToDo(props) {
   }
 
   useEffect(_getTodoItems, []);
+
   useEffect(() => {
     updateDocumentTitle();
   });
