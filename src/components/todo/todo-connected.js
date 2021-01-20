@@ -5,7 +5,7 @@ import './todo.scss';
 
 const todoAPI = 'https://dina-basic-api-server.herokuapp.com/todo';
 
-function ToDo(props){
+function ToDo(props) {
 
   const [list, setList] = useState([]);
 
@@ -19,6 +19,7 @@ function ToDo(props){
     })
       .then(response => response.json())
       .then(savedItem => {
+        console.log('before changing list', savedItem);
         setList([...list, savedItem]);
       })
       .catch(console.error);
@@ -29,7 +30,6 @@ function ToDo(props){
     let item = list.filter(i => i._id === id)[0] || {};
 
     if (item._id) {
-
       item.complete = !item.complete;
 
       let url = `${todoAPI}/${id}`;
@@ -47,8 +47,8 @@ function ToDo(props){
         })
         .catch(console.error);
     }
-
   };
+  
   const _getTodoItems = () => {
     fetch(todoAPI, {
       method: 'get',
@@ -56,9 +56,7 @@ function ToDo(props){
     })
       .then(data => data.json())
       .then(data => {
-        console.log('DATA = ',data);
         setList(data);
-        console.log('LIST = ',list);
       })
       .catch(console.error);
   };
@@ -70,42 +68,46 @@ function ToDo(props){
 
   }
 
+  const deleteItem = (id) => {
+
+    if (id) {
+      let url = `${todoAPI}/${id}`;
+      fetch(url, {
+        method: 'delete',
+        mode: 'cors',
+        cache: 'no-cache',
+        headers: { 'Content-Type': 'application/json' }
+      })
+        .then(data => data.json())
+        .then(data => _getTodoItems())
+        .catch(console.error);
+    }
+  }
+
   useEffect(_getTodoItems, []);
-  /*useEffect(()=> {
-    var date = new Date();
-    let list = [
-      { _id: 1, complete: false, text: 'Clean the Kitchen', difficulty: 3, assignee: 'Dina', duedate: "2020-01-29"},
-      { _id: 2, complete: false, text: 'Do the Laundry', difficulty: 2, assignee: 'Simon', duedate: "2020-01-30"},
-      { _id: 3, complete: false, text: 'Walk the Dog', difficulty: 4, assignee: 'Ricardo', duedate: "2020-01-28"},
-      { _id: 4, complete: true, text: 'Do Homework', difficulty: 3, assignee: 'Nathan', duedate: "2020-01-27"},
-      { _id: 5, complete: false, text: 'Take a Nap', difficulty: 1, assignee: 'Mariko', duedate: "2020-01-31"},
-    ];
-
-    setList(list);
-  },[]);*/
-
   useEffect(() => {
     updateDocumentTitle();
   });
 
   return (
-      <>
-        <header>
-          <h2>
+    <>
+      <header>
+        <h2>
           There are {list.filter(listItem => !listItem.complete).length} items left to complete
           </h2>
-        </header>
+      </header>
 
-        <section className="todo">
-          <div>
-            <TodoForm handleSubmit={addItem} />
-          </div>
-          <div>
-            <ListGroup list={list}
-              handleComplete={toggleComplete}/>
-          </div>
-        </section>
-      </>
-    );
+      <section className="todo">
+        <div>
+          <TodoForm handleSubmit={addItem} />
+        </div>
+        <div>
+          <ListGroup list={list}
+            handleComplete={toggleComplete}
+            deleteItem={deleteItem} />
+        </div>
+      </section>
+    </>
+  );
 }
 export default ToDo;
