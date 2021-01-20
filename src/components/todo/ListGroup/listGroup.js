@@ -6,6 +6,13 @@ import './listGroup.scss';
 
 function listGroup(props) {
   console.log('list', props.list);
+  //todo: replace the card with toasts: https://react-bootstrap.github.io/components/toasts/
+  //todo: replace the checkbox with badges: https://react-bootstrap.github.io/components/badge/
+  /*
+  <Badge onClick={() => props.handleComplete(item._id)} variant={item.complete ? 'success' : 'danger'}>
+    <strong className="mr-auto">{item.complete ? 'Complete' : 'Pending'}</strong>
+  </Badge>
+ */
   return (
     <ListGroup>
       {props.list.map(item => (
@@ -19,7 +26,7 @@ function listGroup(props) {
           <Card
             className={item.complete ? "complete" : "incomplete"}
             style={{ width: '25rem' }}
-            >
+          >
             <Card.Body>
               <Card.Title onClick={() => props.updateDB("put", item._id)}> <span>
                 <input type="checkbox" checked={item.complete} onChange={() => props.updateDB("put", item._id)} />
