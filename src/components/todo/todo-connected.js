@@ -1,65 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import TodoForm from './Form/form.js';
 import ListGroup from './ListGroup/listGroup';
-import './todo.scss';
+import useAjax from './hooks/ajax';
 
-const todoAPI = 'https://dina-basic-api-server.herokuapp.com/todo';
+import './todo.scss';
 
 function ToDo(props) {
 
-  const [list, setList] = useState([]);
-
-  const addItem = (item) => {
-    fetch(todoAPI, {
-      method: 'post',
-      mode: 'cors',
-      cache: 'no-cache',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(item)
-    })
-      .then(response => response.json())
-      .then(savedItem => {
-        console.log('before changing list', savedItem);
-        setList([...list, savedItem]);
-      })
-      .catch(console.error);
-  };
-
-  const toggleComplete = id => {
-
-    let item = list.filter(i => i._id === id)[0] || {};
-
-    if (item._id) {
-      item.complete = !item.complete;
-
-      let url = `${todoAPI}/${id}`;
-
-      fetch(url, {
-        method: 'put',
-        mode: 'cors',
-        cache: 'no-cache',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(item)
-      })
-        .then(response => response.json())
-        .then(savedItem => {
-          setList(list.map(listItem => listItem._id === item._id ? savedItem : listItem));
-        })
-        .catch(console.error);
-    }
-  };
-  
-  const _getTodoItems = () => {
-    fetch(todoAPI, {
-      method: 'get',
-      mode: 'cors',
-    })
-      .then(data => data.json())
-      .then(data => {
-        setList(data);
-      })
-      .catch(console.error);
-  };
+  const [list, connectToAPI] = useAjax();
 
   const updateDocumentTitle = () => {
     var listCount = list.length;
@@ -68,26 +16,9 @@ function ToDo(props) {
 
   }
 
-  const deleteItem = (id) => {
+  useEffect(() => {connectToAPI("get")},[]);
 
-    if (id) {
-      let url = `${todoAPI}/${id}`;
-      fetch(url, {
-        method: 'delete',
-        mode: 'cors',
-        cache: 'no-cache',
-        headers: { 'Content-Type': 'application/json' }
-      })
-        .then(data => data.json())
-        .then(data => _getTodoItems())
-        .catch(console.error);
-    }
-  }
-
-  useEffect(_getTodoItems, []);
-  useEffect(() => {
-    updateDocumentTitle();
-  });
+  useEffect(() => updateDocumentTitle());
 
   return (
     <>
@@ -99,12 +30,12 @@ function ToDo(props) {
 
       <section className="todo">
         <div>
-          <TodoForm handleSubmit={addItem} />
+          <TodoForm handleSubmit={connectToAPI} />
         </div>
         <div>
-          <ListGroup list={list}
-            handleComplete={toggleComplete}
-            deleteItem={deleteItem} />
+          <ListGroup 
+            list={list}
+            updateDB={connectToAPI} />
         </div>
       </section>
     </>

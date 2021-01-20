@@ -1,42 +1,30 @@
-import React , {useState} from 'react';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import useForm from '../hooks/form';
+
 // import NavDropdown from 'react-bootstrap/NavDropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function ToDoForm(props){
-  console.log("PROPS INSIDE FORM = ", props.list);
-  
-  const [item, setItem] = useState({});
-  
-  const handleInputChange = e => {
-    e.preventDefault();
-    setItem({...item, [e.target.name]: e.target.value});
-    console.log(item);
-  };
+  const [handleInputChange, handleSubmit] = useForm(getItem);
 
-  const handleSubmit = (e) => {
-    // console.log(e.target);
-    e.preventDefault();
-    if (e.target.text.value) {
-      props.handleSubmit(item);
-      e.target.reset();
-      setItem({});
-    }
-  };
+  function getItem(method,item){
+    props.handleSubmit(method,item);
+  }
 
   return(
     <Form onSubmit={handleSubmit}>  
-      <Form.Group controlId="toDoItem"  onChange={handleInputChange}>
+      <Form.Group controlId="toDoItem"  >
         <Form.Label>Add a to do item</Form.Label>
-        <Form.Control type="text" data-testid="toDoItem" name="text" placeholder="Enter item details" />
+        <Form.Control type="text" data-testid="toDoItem" name="text" placeholder="Enter item details" onChange={handleInputChange} />
       </Form.Group>
-      <Form.Group controlId="assignedTo" onChange={handleInputChange}>
-        <Form.Control type="text" data-testid="assignedTo" name="assignee" placeholder="Enter name of assignee" />
+      <Form.Group controlId="assignedTo" >
+        <Form.Control type="text" data-testid="assignedTo" name="assignee" placeholder="Enter name of assignee" onChange={handleInputChange} />
       </Form.Group>
-        <Form.Group controlId="dueDate" onChange={handleInputChange}>
+        <Form.Group controlId="dueDate" >
           <Form.Label>Due date</Form.Label>
-          <Form.Control type="date" data-testid="dueDate" name="duedate" placeholder="Date" />
+          <Form.Control type="date" data-testid="dueDate" name="duedate" placeholder="Date" onChange={handleInputChange}/>
       </Form.Group>
       <Form.Group controlId="difficultyRange"  >
         <Form.Label>Difficulty Rating</Form.Label>
