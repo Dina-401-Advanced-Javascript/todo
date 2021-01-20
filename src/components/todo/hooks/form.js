@@ -7,7 +7,8 @@ const useForm = (callback) => {
     e.preventDefault();
     if (e.target.text.value) {
       e.target.reset();
-      callback(item);
+      console.log({item})
+      callback("post",item);
       setItem(item);
     }
   }
