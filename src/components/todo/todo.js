@@ -22,7 +22,6 @@ function ToDo(props){
       let newList = list.map(listItem => listItem._id === item._id ? item : listItem);
       setList(newList);
     }
-    //updateDocumentTitle();
 
   };
 
@@ -36,11 +35,11 @@ function ToDo(props){
   useEffect(()=> {
     var date = new Date();
     let list = [
-      { _id: 1, complete: false, text: 'Clean the Kitchen', difficulty: 3, assignee: 'Dina', dueDate: "2020-01-29"},
-      { _id: 2, complete: false, text: 'Do the Laundry', difficulty: 2, assignee: 'Simon', dueDate: "2020-01-30"},
-      { _id: 3, complete: false, text: 'Walk the Dog', difficulty: 4, assignee: 'Ricardo', dueDate: "2020-01-28"},
-      { _id: 4, complete: true, text: 'Do Homework', difficulty: 3, assignee: 'Nathan', dueDate: "2020-01-27"},
-      { _id: 5, complete: false, text: 'Take a Nap', difficulty: 1, assignee: 'Mariko', dueDate: "2020-01-31"},
+      { _id: 1, complete: false, text: 'Clean the Kitchen', difficulty: 3, assignee: 'Dina', duedate: "2020-01-29"},
+      { _id: 2, complete: false, text: 'Do the Laundry', difficulty: 2, assignee: 'Simon', duedate: "2020-01-30"},
+      { _id: 3, complete: false, text: 'Walk the Dog', difficulty: 4, assignee: 'Ricardo', duedate: "2020-01-28"},
+      { _id: 4, complete: true, text: 'Do Homework', difficulty: 3, assignee: 'Nathan', duedate: "2020-01-27"},
+      { _id: 5, complete: false, text: 'Take a Nap', difficulty: 1, assignee: 'Mariko', duedate: "2020-01-31"},
     ];
 
     setList(list);
