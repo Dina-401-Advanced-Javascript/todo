@@ -1,6 +1,12 @@
 #assignedTo{
   color: grey;
+  
 }
 .complete{
   text-decoration: line-through;
+  background-color: rgb(195,230,203);
+}
+.incomplete{
+  text-decoration: none;
+  background-color: rgb(255,238,186);
 }

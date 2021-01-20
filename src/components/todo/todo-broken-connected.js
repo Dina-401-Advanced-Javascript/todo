@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import TodoForm from './Form/form.js';
+import TodoList from './list.js';
 import ListGroup from './ListGroup/listGroup';
 import './todo.scss';
 
+//const todoAPI = 'https://api-js401.herokuapp.com/api/v1/todo';
 const todoAPI = 'https://dina-basic-api-server.herokuapp.com/todo';
 
-function ToDo(props) {
+const ToDo = (props) => {
 
   const [list, setList] = useState([]);
 
-  const addItem = (item) => {
+  const _addItem = (item) => {
     fetch(todoAPI, {
       method: 'post',
       mode: 'cors',
@@ -19,17 +21,17 @@ function ToDo(props) {
     })
       .then(response => response.json())
       .then(savedItem => {
-        console.log('before changing list', savedItem);
         setList([...list, savedItem]);
       })
       .catch(console.error);
   };
 
-  const toggleComplete = id => {
+  const _toggleComplete = id => {
 
     let item = list.filter(i => i._id === id)[0] || {};
 
     if (item._id) {
+
       item.complete = !item.complete;
 
       let url = `${todoAPI}/${id}`;
@@ -48,7 +50,7 @@ function ToDo(props) {
         .catch(console.error);
     }
   };
-  
+
   const _getTodoItems = () => {
     fetch(todoAPI, {
       method: 'get',
@@ -56,7 +58,9 @@ function ToDo(props) {
     })
       .then(data => data.json())
       .then(data => {
+        console.log('DATA = ',data);
         setList(data);
+        console.log('LIST = ',list);
       })
       .catch(console.error);
   };
@@ -67,47 +71,36 @@ function ToDo(props) {
     document.title = `To Do App - ${completed} of ${listCount} items left`;
 
   }
-
-  const deleteItem = (id) => {
-
-    if (id) {
-      let url = `${todoAPI}/${id}`;
-      fetch(url, {
-        method: 'delete',
-        mode: 'cors',
-        cache: 'no-cache',
-        headers: { 'Content-Type': 'application/json' }
-      })
-        .then(data => data.json())
-        .then(data => _getTodoItems())
-        .catch(console.error);
-    }
-  }
-
+  
   useEffect(_getTodoItems, []);
-  useEffect(() => {
-    updateDocumentTitle();
-  });
+
+  useEffect(updateDocumentTitle());
 
   return (
     <>
       <header>
         <h2>
-          There are {list.filter(listItem => !listItem.complete).length} items left to complete
-          </h2>
+          There are {list.filter(item => !item.complete).length} items left to complete
+        </h2>
       </header>
 
       <section className="todo">
+
         <div>
-          <TodoForm handleSubmit={addItem} />
+          <TodoForm 
+            handleSubmit={_addItem} 
+          />
         </div>
+
         <div>
-          <ListGroup list={list}
-            handleComplete={toggleComplete}
-            deleteItem={deleteItem} />
+          <TodoList 
+            list={list}
+            handleComplete={_toggleComplete}
+          />
         </div>
       </section>
     </>
   );
-}
+};
+
 export default ToDo;

@@ -5,12 +5,14 @@ import Form from 'react-bootstrap/Form';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function ToDoForm(props){
-
-  const [item, setItem] = useState('');
+  console.log("PROPS INSIDE FORM = ", props.list);
+  
+  const [item, setItem] = useState({});
   
   const handleInputChange = e => {
     e.preventDefault();
     setItem({...item, [e.target.name]: e.target.value});
+    console.log(item);
   };
 
   const handleSubmit = (e) => {
@@ -34,7 +36,7 @@ function ToDoForm(props){
       </Form.Group>
         <Form.Group controlId="dueDate" onChange={handleInputChange}>
           <Form.Label>Due date</Form.Label>
-          <Form.Control type="date" data-testid="dueDate" name="dueDate" placeholder="Date" />
+          <Form.Control type="date" data-testid="dueDate" name="duedate" placeholder="Date" />
       </Form.Group>
       <Form.Group controlId="difficultyRange"  >
         <Form.Label>Difficulty Rating</Form.Label>
