@@ -1,30 +1,40 @@
-import React from 'react';
+import React , {useState} from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import useForm from '../hooks/form';
-
 // import NavDropdown from 'react-bootstrap/NavDropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ReactDOM from 'react-dom'
 
 function ToDoForm(props){
-  const [handleInputChange, handleSubmit] = useForm(getItem);
 
-  function getItem(method,item){
-    props.handleSubmit(method,item);
-  }
+  const [item, setItem] = useState('');
+  
+  const handleInputChange = e => {
+    e.preventDefault();
+    setItem({...item, [e.target.name]: e.target.value});
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (item) {
+      props.handleSubmit(item);
+      e.target.reset();
+      setItem({});
+    }
+  };
 
   return(
     <Form onSubmit={handleSubmit}>  
-      <Form.Group controlId="toDoItem"  >
+      <Form.Group controlId="toDoItem"  onChange={handleInputChange}>
         <Form.Label>Add a to do item</Form.Label>
-        <Form.Control type="text" data-testid="toDoItem" name="text" placeholder="Enter item details" onChange={handleInputChange} />
+        <Form.Control type="text" data-testid="toDoItem" name="text" placeholder="Enter item details" />
       </Form.Group>
-      <Form.Group controlId="assignedTo" >
-        <Form.Control type="text" data-testid="assignedTo" name="assignee" placeholder="Enter name of assignee" onChange={handleInputChange} />
+      <Form.Group controlId="assignedTo" onChange={handleInputChange}>
+        <Form.Control type="text" data-testid="assignedTo" name="assignee" placeholder="Enter name of assignee" />
       </Form.Group>
-        <Form.Group controlId="dueDate" >
+        <Form.Group controlId="dueDate" onChange={handleInputChange}>
           <Form.Label>Due date</Form.Label>
-          <Form.Control type="date" data-testid="dueDate" name="duedate" placeholder="Date" onChange={handleInputChange}/>
+          <Form.Control type="date" data-testid="dueDate" name="dueDate" placeholder="Date" />
       </Form.Group>
       <Form.Group controlId="difficultyRange"  >
         <Form.Label>Difficulty Rating</Form.Label>
