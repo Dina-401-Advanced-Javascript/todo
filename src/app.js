@@ -1,18 +1,21 @@
 import React from 'react';
-import ToDoConnected from './components/todo/todo-connected.js';
-import Footer from './components/todo/Footer/footer';
-import Header from './components/todo/Header/header';
+import ToDo from './components/todo/todo.js';
+import Footer from './components/todo/footer/footer';
+import Header from './components/todo/header/header';
+import AppSettingsContext from './components/todo/context/appSettings';
 
-function App(props){
-  
-    return (
-      <>
+function App(props) {
+
+  return (
+    <>
+      <AppSettingsContext>
         <Header />
-        <ToDoConnected/>
-        <Footer/>
-      </>
-    );
-  
+        <ToDo />
+        <Footer />
+      </AppSettingsContext>
+    </>
+  );
+
 }
 
 export default App;

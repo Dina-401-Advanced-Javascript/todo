@@ -1,72 +1,44 @@
-import React, { useEffect, useState } from 'react';
-import TodoForm from './Form/form.js';
-//import TodoList from './list.js';
-import ListGroup from './ListGroup/listGroup';
+import React, { useEffect } from 'react';
+import TodoForm from './form/form.js';
+import useAjax from './hooks/ajax';
+import List from './list/list.js'
+
 import './todo.scss';
 
-function ToDo(props){
+function ToDo(props) {
 
-  const [list, setList] = useState([]);
-
-  const addItem = (item) => {
-    item._id = Math.random();
-    item.complete = false;
-    setList([...list, item]);
-  };
-
-  const toggleComplete = id => {
-
-    let item = list.filter(listItem => listItem._id === id)[0] || {};
-    if (item._id) {
-      item.complete = !item.complete;
-      let newList = list.map(listItem => listItem._id === item._id ? item : listItem);
-      setList(newList);
-    }
-
-  };
+  const [list, connectToAPI] = useAjax();
 
   const updateDocumentTitle = () => {
     var listCount = list.length;
     var completed = list.filter(listItem => !listItem.complete).length;
     document.title = `To Do App - ${completed} of ${listCount} items left`;
-
   }
 
-  useEffect(()=> {
-    var date = new Date();
-    let list = [
-      { _id: 1, complete: false, text: 'Clean the Kitchen', difficulty: 3, assignee: 'Dina', duedate: "2020-01-29"},
-      { _id: 2, complete: false, text: 'Do the Laundry', difficulty: 2, assignee: 'Simon', duedate: "2020-01-30"},
-      { _id: 3, complete: false, text: 'Walk the Dog', difficulty: 4, assignee: 'Ricardo', duedate: "2020-01-28"},
-      { _id: 4, complete: true, text: 'Do Homework', difficulty: 3, assignee: 'Nathan', duedate: "2020-01-27"},
-      { _id: 5, complete: false, text: 'Take a Nap', difficulty: 1, assignee: 'Mariko', duedate: "2020-01-31"},
-    ];
+  useEffect(() => { connectToAPI("get") }, []);
 
-    setList(list);
-  },[]);
+  useEffect(() => updateDocumentTitle());
 
-  useEffect(() => {
-    updateDocumentTitle();
-  });
-
+  var length = list.filter(listItem => !listItem.complete).length;
   return (
-      <>
-        <header>
-          <h2>
-          There are {list.filter(listItem => !listItem.complete).length} items left to complete
+    <>
+      <header>
+        <h2>
+          There {length > 1 || length === 0 ? `are ${length} items` : `is 1 item`} left to complete
           </h2>
-        </header>
+      </header>
 
-        <section className="todo">
-          <div>
-            <TodoForm handleSubmit={addItem} />
-          </div>
-          <div>
-            <ListGroup list={list}
-              handleComplete={toggleComplete}/>
-          </div>
-        </section>
-      </>
-    );
+      <section>
+        <div className="toDoDiv">
+          <TodoForm handleSubmit={connectToAPI} />
+        </div>
+        <div className="listDiv">
+          <List
+            list={list}
+            updateDB={connectToAPI} />
+        </div>
+      </section>
+    </>
+  );
 }
 export default ToDo;
