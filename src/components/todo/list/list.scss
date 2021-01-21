@@ -1,0 +1,44 @@
+#assignedTo{
+  color: grey;
+}
+.complete{
+  text-decoration: line-through;
+  background-color: rgb(195,230,203);
+}
+.incomplete{
+  text-decoration: none;
+  background-color: rgb(255,238,186);
+}
+#deleteButton{
+  text-decoration: none;
+}
+.toast{
+  width: 30vw;
+}
+#difficulty{
+  text-align: right;
+}
+small{
+  color: gray;
+}
+#previous{
+  float: left;
+}
+#next{ 
+  float: right;
+  text-align: right;
+}
+#pagination{
+  margin-top:20px;
+  width: 100%;
+}
+#previousButton{
+  background: none;
+  border: none;
+  color:blue;
+}
+#nextButton{
+  background: none;
+  border: none;
+  color:blue;
+}

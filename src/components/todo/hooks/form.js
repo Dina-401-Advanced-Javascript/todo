@@ -7,14 +7,13 @@ const useForm = (callback) => {
     e.preventDefault();
     if (e.target.text.value) {
       e.target.reset();
-      console.log({item})
-      callback("post",item);
+      callback('post', item);
       setItem(item);
     }
   }
 
   const handleInputChange = e => {
-    setItem({ ...item, [e.target.name]: e.target.value} );
+    setItem({ ...item, [e.target.name]: e.target.value });
   }
 
   return [
@@ -26,4 +25,3 @@ const useForm = (callback) => {
 export default useForm;
 
 
-  
