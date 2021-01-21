@@ -28,8 +28,8 @@ function List(props) {
     appSettingsContext.currentPageNumber--;
     currentPageNumber--;
     setSubList(props.list.slice(currentPageNumber * itemsPerPage, (currentPageNumber * itemsPerPage) + itemsPerPage));
-
   }
+
   const next = () => {
     // console.log('inside next');
     appSettingsContext.currentPageNumber++;
