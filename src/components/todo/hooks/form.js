@@ -5,7 +5,7 @@ const useForm = (callback) => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    if (e.target.text.value) {
+    if (item) {
       e.target.reset();
       callback('post', item);
       setItem(item);

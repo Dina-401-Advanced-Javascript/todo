@@ -20,7 +20,7 @@ describe('App Tests', () =>{
     userEvent.type(screen.getByTestId('dueDate'), "01/31/2020");
     fireEvent.click(screen.getByTestId('submitButton'));
 
-    let items = await waitFor(() => screen.getAllByTestId('list-item'));
+    let items = await waitFor(() => screen.getAllByTestId('list-items'));
     
     expect(items[items.length-1]).toHaveTextContent('Buy potatoes');
   });
