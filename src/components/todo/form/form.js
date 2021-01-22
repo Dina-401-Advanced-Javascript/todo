@@ -1,13 +1,11 @@
 import React, { useContext } from 'react';
 import Button from 'react-bootstrap/Button';
-import DropDown from 'react-bootstrap/Dropdown'
 import Form from 'react-bootstrap/Form';
 import useForm from '../hooks/form';
 import { AppSettingsContext } from '../context/appSettings';
 
 // import NavDropdown from 'react-bootstrap/NavDropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ReactDOM from 'react-dom'
 
 function ToDoForm(props) {
   const [handleInputChange, handleSubmit] = useForm(getItem);
@@ -26,7 +24,7 @@ function ToDoForm(props) {
     <Form onSubmit={handleSubmit}>
       <Form.Group controlId="toDoItem"  >
         <Form.Label>Add a to do item</Form.Label>
-        <Form.Control type="text" data-testid="toDoItem" name="text" placeholder="Enter item details" />
+        <Form.Control type="text" data-testid="toDoItem" name="text" onChange={handleInputChange} placeholder="Enter item details" />
       </Form.Group>
       <Form.Group controlId="assignedTo" onChange={handleInputChange}>
         <Form.Control type="text" data-testid="assignedTo" name="assignee" placeholder="Enter name of assignee" />
