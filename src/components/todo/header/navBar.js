@@ -1,10 +1,9 @@
 import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import FormControl from 'react-bootstrap/FormControl';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Login from '../form/loginForm';
+import LoginContext from '../context/login';
 
 function Navigation(props) {
   return (
@@ -14,12 +13,11 @@ function Navigation(props) {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
         </Nav>
-        <Form inline>
-          <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-          <Button variant="outline-success">Search</Button>
-        </Form>
+        <LoginContext>
+          <Login />
+        </LoginContext>
       </Navbar.Collapse>
-    </Navbar>
+    </Navbar >
   )
 }
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import jwt from 'jsonwebtoken';
 import cookie from 'react-cookies';
 
-const API = process.env.REACT_APP_API;
+const API = process.env.REACT_APP_API_LOGIN;
 // REACT_APP_API=https://auth-server-401d39.herokuapp.com
 
 export const LoginContext = React.createContext();
@@ -12,6 +12,7 @@ function LoginProvider(props) {
   const [loggedIn, setLoggedIn] = useState(false);
 
   const login = (username, password) => {
+    console.log('in login!', { username, password });
     fetch(`${API}/signin`, {
       method: 'post',
       mode: 'cors',

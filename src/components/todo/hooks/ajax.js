@@ -2,7 +2,7 @@ import { useState, useContext } from 'react';
 import axios from 'axios';
 import { AppSettingsContext } from '../context/appSettings';
 
-const todoAPI = 'https://dina-auth-api.herokuapp.com/api/v2/todo';//https://dina-basic-api-server.herokuapp.com/todo';
+const todoAPI = process.env.REACT_APP_API_TODO;// 'https://dina-auth-api.herokuapp.com/api/v2/todo';//https://dina-basic-api-server.herokuapp.com/todo';
 
 const useAjax = () => {
   const [list, setList] = useState([]);
@@ -49,7 +49,7 @@ const useAjax = () => {
           .catch(console.error);
       }
     } else if (method === 'post') {
-      console.log('adding the item');
+      console.log('adding the item', id);
       axios.post(todoAPI, {
         text: id.text,
         assignee: id.assignee,

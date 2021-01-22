@@ -27,14 +27,15 @@ function Login(props) {
   }
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Group className="login" controlId="username" onChange={handleUsernameChange}>
+    <Form inline onSubmit={handleSubmit}>
+      <Form.Label id="login-header">Login</Form.Label>
+      <Form.Group className="loginInputs" controlId="username" onChange={handleUsernameChange}>
         <Form.Control type="text" data-testid="toDoItem" name="text" placeholder="Enter your username" />
       </Form.Group>
-      <Form.Group className="login" controlId="password" onChange={handlePasswordChange}>
+      <Form.Group className="loginInputs" controlId="password" onChange={handlePasswordChange}>
         <Form.Control type="password" data-testid="password" name="password" placeholder="Enter your password" />
       </Form.Group>
-      <Button data-testid="submitButton" variant="primary" type="submit">Submit</Button>
+      <Button id="loginButton" data-testid="submitButton" variant="primary" type="submit">Submit</Button>
     </Form>
   )
 }

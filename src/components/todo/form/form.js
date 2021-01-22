@@ -6,7 +6,6 @@ import { AppSettingsContext } from '../context/appSettings';
 
 // import NavDropdown from 'react-bootstrap/NavDropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import ReactDOM from 'react-dom'
 
 function ToDoForm(props) {
   const [handleInputChange, handleSubmit] = useForm(getItem);
@@ -25,7 +24,7 @@ function ToDoForm(props) {
     <Form onSubmit={handleSubmit}>
       <Form.Group controlId="toDoItem"  >
         <Form.Label>Add a to do item</Form.Label>
-        <Form.Control type="text" data-testid="toDoItem" name="text" placeholder="Enter item details" />
+        <Form.Control type="text" data-testid="toDoItem" name="text" onChange={handleInputChange} placeholder="Enter item details" />
       </Form.Group>
       <Form.Group controlId="assignedTo" onChange={handleInputChange}>
         <Form.Control type="text" data-testid="assignedTo" name="assignee" placeholder="Enter name of assignee" />
@@ -40,7 +39,7 @@ function ToDoForm(props) {
       </Form.Group>
       <Button data-testid="submitButton" variant="primary" type="submit">Submit</Button>
       <Form.Group controlId="formBasicCheckbox" >
-        <Form.Check type="checkbox" defaultChecked label="Show Completed Items" onClick={updateAppSettings} />
+        <Form.Check type="checkbox" label="Show Completed Items" onClick={updateAppSettings} />
       </Form.Group>
     </Form>
   );
