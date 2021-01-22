@@ -1,14 +1,18 @@
 import { useState, useContext } from 'react';
 import axios from 'axios';
 import { AppSettingsContext } from '../context/appSettings';
+import cookie from 'react-cookies';
 
 const todoAPI = process.env.REACT_APP_API_TODO;// 'https://dina-auth-api.herokuapp.com/api/v2/todo';//https://dina-basic-api-server.herokuapp.com/todo';
-
 const useAjax = () => {
+  let token = cookie.load('auth');
+
+  if (!token) token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRpbmEiLCJpYXQiOjE2MTEyOTE5MzJ9.XL5YMCGkOIq8i7ioEy4j3hfVFd3IUcO6QAOD_fM406g';
+
   const [list, setList] = useState([]);
   const appSettingsContext = useContext(AppSettingsContext);
   //todo: get the token from our login context
-  axios.defaults.headers.common['Authorization'] = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRpbmEzIiwiaWF0IjoxNjExMjkxMjIzfQ.O8i985yw6cl-KWIRGJ76KNe5DwZe7t6QxrOdXyfo2xo';
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
   const get = () => {
     console.log('getting...');

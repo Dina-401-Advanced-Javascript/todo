@@ -3,7 +3,6 @@ import jwt from 'jsonwebtoken';
 import cookie from 'react-cookies';
 
 const API = process.env.REACT_APP_API_LOGIN;
-// REACT_APP_API=https://auth-server-401d39.herokuapp.com
 
 export const LoginContext = React.createContext();
 
@@ -26,7 +25,7 @@ function LoginProvider(props) {
         return response.json();
       })
       .then(user => {
-        console.log('user', user);
+        // console.log('user', user);
         validateToken(user.token);
       })
   }
